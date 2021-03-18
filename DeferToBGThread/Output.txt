@@ -1,20 +1,27 @@
-﻿Created thread 5
+﻿Thread: 5, Time: 3/18/2021 2:51:31 PM,    -- enter doSave       - id = 1
+Thread: 5, Time: 3/18/2021 2:51:31 PM,    -- leaving doSave     - id = 1
+Thread: 4, Time: 3/18/2021 2:51:31 PM,    ## enter handleSave   - id = 1
+Thread: 5, Time: 3/18/2021 2:51:31 PM,    ++ enter doGet        - id = 1
 Created thread 6
-Thread: 5, Time: 3/18/2021 1:09:24 PM, ++ enter doGet   - id = 1
-Thread: 4, Time: 3/18/2021 1:09:24 PM, -- enter doSave   - id = 1
-Thread: 6, Time: 3/18/2021 1:09:25 PM, ++ enter doGet   - id = 2
+Thread: 6, Time: 3/18/2021 2:51:32 PM,    -- enter doSave       - id = 2
+Thread: 6, Time: 3/18/2021 2:51:32 PM,    -- leaving doSave     - id = 2
+Thread: 6, Time: 3/18/2021 2:51:32 PM,    ++ enter doGet        - id = 2
 Created thread 7
-Thread: 4, Time: 3/18/2021 1:09:26 PM,    leaving doSave - id = 1
-Thread: 4, Time: 3/18/2021 1:09:26 PM, -- enter doSave   - id = 2
-Thread: 7, Time: 3/18/2021 1:09:26 PM, ++ enter doGet   - id = 3
+Thread: 4, Time: 3/18/2021 2:51:33 PM,    ## leaving handleSave - id = 1
+Thread: 4, Time: 3/18/2021 2:51:33 PM,    ## enter handleSave   - id = 2
+Thread: 7, Time: 3/18/2021 2:51:33 PM,    -- enter doSave       - id = 3
+Thread: 7, Time: 3/18/2021 2:51:33 PM,    -- leaving doSave     - id = 3
+Thread: 7, Time: 3/18/2021 2:51:33 PM,    ++ enter doGet        - id = 3
 Created thread 8
-Thread: 5, Time: 3/18/2021 1:09:27 PM,    doGet         - returning 11
-Thread: 8, Time: 3/18/2021 1:09:27 PM, ++ enter doGet   - id = 4
-Thread: 4, Time: 3/18/2021 1:09:28 PM,    leaving doSave - id = 2
-Thread: 4, Time: 3/18/2021 1:09:28 PM, -- enter doSave   - id = 3
-Thread: 6, Time: 3/18/2021 1:09:29 PM,    doGet         - returning 12
-Thread: 4, Time: 3/18/2021 1:09:30 PM,    leaving doSave - id = 3
-Thread: 4, Time: 3/18/2021 1:09:30 PM, -- enter doSave   - id = 4
-Thread: 7, Time: 3/18/2021 1:09:31 PM,    doGet         - returning 13
-Thread: 4, Time: 3/18/2021 1:09:32 PM,    leaving doSave - id = 4
-Thread: 8, Time: 3/18/2021 1:09:33 PM,    doGet         - returning 14
+Thread: 5, Time: 3/18/2021 2:51:34 PM,    ++ doGet              - returning 11
+Thread: 8, Time: 3/18/2021 2:51:34 PM,    -- enter doSave       - id = 4
+Thread: 8, Time: 3/18/2021 2:51:34 PM,    -- leaving doSave     - id = 4
+Thread: 8, Time: 3/18/2021 2:51:34 PM,    ++ enter doGet        - id = 4
+Thread: 4, Time: 3/18/2021 2:51:35 PM,    ## leaving handleSave - id = 2
+Thread: 4, Time: 3/18/2021 2:51:35 PM,    ## enter handleSave   - id = 3
+Thread: 6, Time: 3/18/2021 2:51:36 PM,    ++ doGet              - returning 12
+Thread: 4, Time: 3/18/2021 2:51:37 PM,    ## leaving handleSave - id = 3
+Thread: 4, Time: 3/18/2021 2:51:37 PM,    ## enter handleSave   - id = 4
+Thread: 7, Time: 3/18/2021 2:51:38 PM,    ++ doGet              - returning 13
+Thread: 4, Time: 3/18/2021 2:51:39 PM,    ## leaving handleSave - id = 4
+Thread: 8, Time: 3/18/2021 2:51:40 PM,    ++ doGet              - returning 14

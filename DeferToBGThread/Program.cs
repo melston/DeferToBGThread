@@ -43,7 +43,7 @@ namespace DeferToBGThread
         {
             if (td == null) return;
 
-            Console.WriteLine("Thread: {0}, Time: {1}, -- enter doSave   - id = {2}",
+            Console.WriteLine("Thread: {0}, Time: {1},    ## enter handleSave   - id = {2}",
                 Thread.CurrentThread.ManagedThreadId,
                 DateTime.Now,
                 td.id);
@@ -55,7 +55,7 @@ namespace DeferToBGThread
             // Now let clients of the HWTestData know that the upload is done.
             td.uploadDoneEvent.Set();
  
-            Console.WriteLine("Thread: {0}, Time: {1},    leaving doSave - id = {2}",
+            Console.WriteLine("Thread: {0}, Time: {1},    ## leaving handleSave - id = {2}",
                 Thread.CurrentThread.ManagedThreadId,
                 DateTime.Now,
                 td.id);
@@ -63,13 +63,24 @@ namespace DeferToBGThread
 
         public void doSave(HWTestData td)
         {
+            Console.WriteLine("Thread: {0}, Time: {1},    -- enter doSave       - id = {2}",
+                Thread.CurrentThread.ManagedThreadId,
+                DateTime.Now,
+                td.id);
+
             saves.OnNext(td);
+
+            Console.WriteLine("Thread: {0}, Time: {1},    -- leaving doSave     - id = {2}",
+                Thread.CurrentThread.ManagedThreadId,
+                DateTime.Now,
+                td.id);
+
             return;
         }
 
         public int doGet(HWTestData td)
         {
-            Console.WriteLine("Thread: {0}, Time: {1}, ++ enter doGet   - id = {2}", 
+            Console.WriteLine("Thread: {0}, Time: {1},    ++ enter doGet        - id = {2}", 
                 Thread.CurrentThread.ManagedThreadId,
                 DateTime.Now,
                 td.id);
@@ -88,7 +99,7 @@ namespace DeferToBGThread
 
             Thread.Sleep(TimeSpan.FromSeconds(td.getWaitTime));
 
-            Console.WriteLine("Thread: {0}, Time: {1},    doGet         - returning {2}", 
+            Console.WriteLine("Thread: {0}, Time: {1},    ++ doGet              - returning {2}", 
                 Thread.CurrentThread.ManagedThreadId,
                 DateTime.Now,
                 td.data);
