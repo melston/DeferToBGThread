@@ -11,10 +11,12 @@ namespace DeferToBGThread
     {
         public int saveWaitTime;
         public int getWaitTime;
+        public int data;
         public int id;
 
         public HWTestData(int id, int saveTime, int getWaitTime)
         {
+            this.data = int.MinValue;
             this.id = id;
             this.saveWaitTime = saveTime;
             this.getWaitTime = getWaitTime;
@@ -26,32 +28,36 @@ namespace DeferToBGThread
         public LLA() { }
 
         public void doSave(HWTestData td)
-        {
-            Console.WriteLine("Thread: {0}, Time: {1}, -- enter doSave", 
+        { 
+            Console.WriteLine("Thread: {0}, Time: {1}, -- enter doSave     - id = {2}", 
                 Thread.CurrentThread.ManagedThreadId,
-                DateTime.Now);
+                DateTime.Now,
+                td.id);
 
             Thread.Sleep(TimeSpan.FromSeconds(td.saveWaitTime));
 
-            Console.WriteLine("Thread: {0}, Time: {1},    leaving doSave",
+            Console.WriteLine("Thread: {0}, Time: {1},    leaving doSave   - id = {2}",
                 Thread.CurrentThread.ManagedThreadId,
-                DateTime.Now);
+                DateTime.Now,
+                td.id);
 
             return;
         }
 
         public int doGet(HWTestData td)
         {
-            Console.WriteLine("Thread: {0}, Time: {1}, ++ enter doGet", 
-                Thread.CurrentThread.ManagedThreadId,
-                DateTime.Now);
-
-            Thread.Sleep(TimeSpan.FromSeconds(td.getWaitTime));
-
-            Console.WriteLine("Thread: {0}, Time: {1},    doGet returning {2}", 
+            Console.WriteLine("Thread: {0}, Time: {1}, ++ enter doGet   - id = {2}", 
                 Thread.CurrentThread.ManagedThreadId,
                 DateTime.Now,
                 td.id);
+
+            Thread.Sleep(TimeSpan.FromSeconds(td.getWaitTime));
+            td.data = td.id + 10;
+
+            Console.WriteLine("Thread: {0}, Time: {1},    doGet         - returning {2}", 
+                Thread.CurrentThread.ManagedThreadId,
+                DateTime.Now,
+                td.data);
 
             return td.id;
         }
