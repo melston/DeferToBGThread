@@ -103,6 +103,7 @@ namespace DeferToBGThread
             foreach (TestOb tobj in obs)
             {
                 Thread tstThread = new Thread(tobj.run);
+                Console.WriteLine("Created thread {0}", tstThread.ManagedThreadId);
                 tstThread.Start();
                 tobj.releaseHwEvent.WaitOne();
                 tobj.releaseHwEvent.Reset();
