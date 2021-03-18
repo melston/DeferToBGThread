@@ -10,26 +10,62 @@ namespace DeferToBGThread
 
     class LLA
     {
-        LLA() { }
+        public LLA() { }
 
-    }
-
-    class TThread
-    {
-        private int id;
-        private int saveTime;
-        private int getWaitTime;
-
-        TThread(int id, int saveTime, int getWaitTime)
+        public void doSave(TestOb thrd)
         {
-            this.id = id;
-            this.saveTime = saveTime;
-            this.getWaitTime = getWaitTime;
+            Console.WriteLine("Thread: {0}, Time: {1}, -- enter doSave", 
+                Thread.CurrentThread.ManagedThreadId,
+                DateTime.Now);
+
+            Thread.Sleep(TimeSpan.FromSeconds(thrd.saveWaitTime));
+
+            Console.WriteLine("Thread: {0}, Time: {1},    leaving doSave",
+                Thread.CurrentThread.ManagedThreadId,
+                DateTime.Now);
+
+            return;
         }
 
-        void run()
+        public int doGet(TestOb tobj)
         {
-            Thread.Sleep(saveTime);
+            Console.WriteLine("Thread: {0}, Time: {1}, ++ enter doGet", 
+                Thread.CurrentThread.ManagedThreadId,
+                DateTime.Now);
+
+            Thread.Sleep(TimeSpan.FromSeconds(tobj.getWaitTime));
+
+            Console.WriteLine("Thread: {0}, Time: {1},    doGet returning {2}", 
+                Thread.CurrentThread.ManagedThreadId,
+                DateTime.Now,
+                tobj.id);
+
+            return tobj.id;
+        }
+    }
+
+    class TestOb
+    {
+        int initialWaitTime;
+        public int id;
+        public int saveWaitTime;
+        public int getWaitTime;
+        LLA lla;
+
+        public TestOb(int id, int initialWaitTime, int saveTime, int getWaitTime, LLA lla)
+        {
+            this.id = id;
+            this.initialWaitTime = initialWaitTime;
+            this.saveWaitTime = saveTime;
+            this.getWaitTime = getWaitTime;
+            this.lla = lla;
+        }
+
+        public void run()
+        {
+            Thread.Sleep(TimeSpan.FromSeconds(initialWaitTime));
+            lla.doSave(this);
+            lla.doGet(this);
         }
     }
 
@@ -37,6 +73,20 @@ namespace DeferToBGThread
     {
         static void Main(string[] args)
         {
+            LLA lla = new LLA();
+            TestOb[] obs = new TestOb[] { 
+                new TestOb(1, 1, 2, 1, lla),
+                new TestOb(2, 1, 2, 1, lla),
+                new TestOb(3, 1, 2, 1, lla),
+                new TestOb(4, 1, 2, 1, lla),
+            };
+
+            List<Thread> thrds = new List<Thread>();
+            foreach (TestOb tobj in obs)
+            {
+                tobj.run();
+                //thrds.Add(new Thread(new ThreadStart(tobj.run)));
+            }
         }
     }
 }
