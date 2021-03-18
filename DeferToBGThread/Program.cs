@@ -29,14 +29,14 @@ namespace DeferToBGThread
 
         public void doSave(HWTestData td)
         { 
-            Console.WriteLine("Thread: {0}, Time: {1}, -- enter doSave     - id = {2}", 
+            Console.WriteLine("Thread: {0}, Time: {1},    -- enter doSave       - id = {2}", 
                 Thread.CurrentThread.ManagedThreadId,
                 DateTime.Now,
                 td.id);
 
             Thread.Sleep(TimeSpan.FromSeconds(td.saveWaitTime));
 
-            Console.WriteLine("Thread: {0}, Time: {1},    leaving doSave   - id = {2}",
+            Console.WriteLine("Thread: {0}, Time: {1},    -- leaving doSave     - id = {2}",
                 Thread.CurrentThread.ManagedThreadId,
                 DateTime.Now,
                 td.id);
@@ -46,7 +46,7 @@ namespace DeferToBGThread
 
         public int doGet(HWTestData td)
         {
-            Console.WriteLine("Thread: {0}, Time: {1}, ++ enter doGet   - id = {2}", 
+            Console.WriteLine("Thread: {0}, Time: {1},    ++ enter doGet        - id = {2}", 
                 Thread.CurrentThread.ManagedThreadId,
                 DateTime.Now,
                 td.id);
@@ -54,7 +54,7 @@ namespace DeferToBGThread
             Thread.Sleep(TimeSpan.FromSeconds(td.getWaitTime));
             td.data = td.id + 10;
 
-            Console.WriteLine("Thread: {0}, Time: {1},    doGet         - returning {2}", 
+            Console.WriteLine("Thread: {0}, Time: {1},    ++ doGet              - returning {2}", 
                 Thread.CurrentThread.ManagedThreadId,
                 DateTime.Now,
                 td.data);
