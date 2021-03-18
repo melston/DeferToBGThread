@@ -69,7 +69,7 @@ namespace DeferToBGThread
 
         public int doGet(HWTestData td)
         {
-            Console.WriteLine("Thread: {0}, Time: {1}, ++ enter doGet - id = {2}", 
+            Console.WriteLine("Thread: {0}, Time: {1}, ++ enter doGet   - id = {2}", 
                 Thread.CurrentThread.ManagedThreadId,
                 DateTime.Now,
                 td.id);
@@ -88,7 +88,7 @@ namespace DeferToBGThread
 
             Thread.Sleep(TimeSpan.FromSeconds(td.getWaitTime));
 
-            Console.WriteLine("Thread: {0}, Time: {1},    doGet returning {2}", 
+            Console.WriteLine("Thread: {0}, Time: {1},    doGet         - returning {2}", 
                 Thread.CurrentThread.ManagedThreadId,
                 DateTime.Now,
                 td.data);
