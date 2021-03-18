@@ -30,13 +30,12 @@ namespace DeferToBGThread
 
     class LLA
     {
-        EventLoopScheduler scheduler = new EventLoopScheduler(ts => new Thread(ts));
         BehaviorSubject<HWTestData> saves = new BehaviorSubject<HWTestData>(null);
 
         public LLA() 
         {
             saves
-                .ObserveOn(scheduler)
+                .ObserveOn(new EventLoopScheduler(ts => new Thread(ts)))
                 .Subscribe(handleSave);
         }
 
