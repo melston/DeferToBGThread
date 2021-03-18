@@ -59,26 +59,26 @@ namespace DeferToBGThread
 
     class TestOb
     {
-        int initialWaitTime;
+        int measExecTime;
         HWTestData td;
         LLA lla;
 
-        public ManualResetEvent tstDoneEvent = new ManualResetEvent(false);
+        public ManualResetEvent releaseHwEvent = new ManualResetEvent(false);
 
-        public TestOb(int id, int initialWaitTime, int saveTime, int getWaitTime, LLA lla)
+        public TestOb(int id, int measExecTime, int saveTime, int getWaitTime, LLA lla)
         {
             td = new HWTestData(id, saveTime, getWaitTime);
 
-            this.initialWaitTime = initialWaitTime;
+            this.measExecTime = measExecTime;
             this.lla = lla;
         }
 
         public void run()
         {
-            Thread.Sleep(TimeSpan.FromSeconds(initialWaitTime));
+            Thread.Sleep(TimeSpan.FromSeconds(measExecTime));
             lla.doSave(td);
             lla.doGet(td);
-            tstDoneEvent.Set();
+            releaseHwEvent.Set();
         }
     }
 
@@ -98,8 +98,8 @@ namespace DeferToBGThread
             {
                 Thread tstThread = new Thread(tobj.run);
                 tstThread.Start();
-                tobj.tstDoneEvent.WaitOne();
-                tobj.tstDoneEvent.Reset();
+                tobj.releaseHwEvent.WaitOne();
+                tobj.releaseHwEvent.Reset();
             }
         }
     }
