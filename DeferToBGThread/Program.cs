@@ -17,7 +17,7 @@ namespace DeferToBGThread
         public int getWaitTime;
         public int id;
         public int data;
-        public BehaviorSubject<bool> done = new BehaviorSubject<bool>(false);
+        public ManualResetEvent uploadDoneEvent = new ManualResetEvent(false);
 
         public HWTestData(int id, int saveTime, int getWaitTime)
         {
@@ -53,8 +53,7 @@ namespace DeferToBGThread
             td.data = td.id + 10;
 
             // Now let clients of the HWTestData know that the upload is done.
-            td.done
-                .OnNext(true);
+            td.uploadDoneEvent.Set();
  
             Console.WriteLine("Thread: {0}, Time: {1},    leaving doSave - id = {2}",
                 Thread.CurrentThread.ManagedThreadId,
@@ -79,20 +78,13 @@ namespace DeferToBGThread
             /// This block is a 'shim' to marry Rx and 'standard' threading so that
             /// we wait for an observable to have data available before proceeding
             /// in normal thread-based code.
-            ManualResetEvent uploadDoneEvent = new ManualResetEvent(false);
-            // If the value coming out of the observable is true then set the
-            // event to indicate we have data available.
-            Action<bool> doReset = b => { if (b) uploadDoneEvent.Set(); };
-            td.done
-                .Subscribe(doReset);
-
-            // Wait until the upload is done
-            uploadDoneEvent.WaitOne();
+            /// 
+            /// Wait until the upload is done
+            td.uploadDoneEvent.WaitOne();
 
             // Safety.  Make sure the observable reports false for the next time it
             // is subscribed to.
-            td.done
-                .OnNext(false);
+            td.uploadDoneEvent.Reset();
 
             Thread.Sleep(TimeSpan.FromSeconds(td.getWaitTime));
 
